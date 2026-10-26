@@ -1,3 +1,67 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SmartDesk · Customer Support</title><link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}"></head><body>
-<header class="top"><div class="wrap nav"><a class="brand" href="{{ url_for('home') }}"><span class="brand-icon">S</span> SmartDesk <small>Customer Support</small></a><div class="navlinks">{% if current_user() %}<a href="{{ url_for('dashboard') }}">Dashboard</a><a href="{{ url_for('new_ticket') }}">New Ticket</a><span class="identity">{{ current_user()['name'] }} · {{ current_user()['role'] }}</span><form action="{{ url_for('logout') }}" method="post"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><button class="link-btn">Log out</button></form>{% endif %}</div></div></header>
-<main class="wrap">{% for category,message in get_flashed_messages(with_categories=true) %}<div class="alert {{ category }}">{{ message }}</div>{% endfor %}{% block content %}{% endblock %}</main><footer class="wrap footer">SmartDesk · Capstone Project · Freek Schaefer-Gerber &amp; Wian Sandenbergh · 2026</footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SmartDesk · Customer Support</title>
+    
+    <!-- Links the main CSS stylesheet using Flask's url_for() to generate the correct path -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- =====================================================================
+         TOP NAVIGATION BAR
+         Displays the logo, and navigation links based on the user's login state.
+         ===================================================================== -->
+    <header class="top">
+        <div class="wrap nav">
+            <!-- Brand Logo / Home Link -->
+            <a class="brand" href="{{ url_for('home') }}">
+                <span class="brand-icon">S</span> SmartDesk <small>Customer Support</small>
+            </a>
+            
+            <div class="navlinks">
+                <!-- Navigation links are only visible if a user is currently logged in -->
+                {% if current_user() %}
+                    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('new_ticket') }}">New Ticket</a>
+                    
+                    <!-- Displays the logged-in user's name and role -->
+                    <span class="identity">{{ current_user()['name'] }} · {{ current_user()['role'] }}</span>
+                    
+                    <!-- Logout Form (Uses POST for security, includes CSRF token) -->
+                    <form action="{{ url_for('logout') }}" method="post">
+                        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+                        <button class="link-btn">Log out</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <!-- =====================================================================
+         MAIN CONTENT AREA
+         ===================================================================== -->
+    <main class="wrap">
+        
+        <!-- FLASH MESSAGES: Displays success, error, or warning alerts after an action -->
+        <!-- get_flashed_messages() pulls messages that were set in the Flask backend using flash() -->
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert {{ category }}">{{ message }}</div>
+        {% endfor %}
+
+        <!-- DYNAMIC CONTENT BLOCK: Child templates (like dashboard.html) inject their content here -->
+        {% block content %}{% endblock %}
+        
+    </main>
+
+    <!-- =====================================================================
+         FOOTER
+         ===================================================================== -->
+    <footer class="wrap footer">
+        SmartDesk · Capstone Project · Freek Schaefer-Gerber &amp; Wian Sandenbergh · 2026
+    </footer>
+
+</body>
+</html>

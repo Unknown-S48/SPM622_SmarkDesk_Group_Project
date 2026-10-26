@@ -1,1 +1,115 @@
-{% extends 'base.html' %}{% block content %}<div class="heading"><div><div class="eyebrow">SUPPORT OVERVIEW</div><h1>Ticket dashboard</h1><p class="muted">Manage requests and monitor their progress.</p></div><a class="btn" href="{{ url_for('new_ticket') }}">+ Create ticket</a></div><div class="stats"><div class="stat"><span>Total tickets</span><strong>{{ tickets|length }}</strong></div>{% for status,count in counts.items() %}<div class="stat"><span>{{ status }}</span><strong>{{ count }}</strong></div>{% endfor %}</div><section class="panel"><div class="section-head"><h2>Recent tickets</h2><span class="muted">{{ tickets|length }} records</span></div><div class="table-wrap"><table><thead><tr><th>Ticket</th><th>Category</th><th>Priority</th><th>Status</th><th>Assigned to</th><th>Updated</th></tr></thead><tbody>{% for t in tickets %}<tr><td><a class="ticket-link" href="{{ url_for('ticket_detail',ticket_id=t.id) }}">#{{ '%04d'|format(t.id) }} · {{ t.title }}</a><small>{{ t.customer_name }}</small></td><td>{{ t.category }}</td><td><span class="pill priority-{{ t.priority|lower }}">{{ t.priority }}</span></td><td><span class="pill">{{ t.status }}</span></td><td>{{ t.assigned_name or 'Unassigned' }}</td><td>{{ t.updated_at[:10] }}</td></tr>{% else %}<tr><td colspan="6" class="empty">No tickets yet. Create your first request.</td></tr>{% endfor %}</tbody></table></div></section>{% endblock %}
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- =====================================================================
+     PAGE HEADER
+     Displays the dashboard title, subtitle, and the "Create ticket" button.
+     ===================================================================== -->
+<div class="heading">
+    <div>
+        <div class="eyebrow">SUPPORT OVERVIEW</div>
+        <h1>Ticket dashboard</h1>
+        <p class="muted">Manage requests and monitor their progress.</p>
+    </div>
+    <a class="btn" href="{{ url_for('new_ticket') }}">+ Create ticket</a>
+</div>
+
+<!-- =====================================================================
+     STATISTICS OVERVIEW (CARDS)
+     Shows total ticket count and dynamically loops through status counts.
+     ===================================================================== -->
+<div class="stats">
+    <!-- Total Tickets Card -->
+    <div class="stat">
+        <span>Total tickets</span>
+        <!-- Uses the Jinja length filter to count the total items in the list -->
+        <strong>{{ tickets|length }}</strong>
+    </div>
+    
+    <!-- Status Breakdown Cards -->
+    <!-- Loops through the 'counts' dictionary passed from the backend (e.g., Open: 5, Closed: 2) -->
+    {% for status, count in counts.items() %}
+    <div class="stat">
+        <span>{{ status }}</span>
+        <strong>{{ count }}</strong>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- =====================================================================
+     TICKET LIST PANEL
+     Displays a table of recent tickets.
+     ===================================================================== -->
+<section class="panel">
+    
+    <!-- Panel Header -->
+    <div class="section-head">
+        <h2>Recent tickets</h2>
+        <span class="muted">{{ tickets|length }} records</span>
+    </div>
+
+    <!-- Table Wrapper for responsive scrolling if needed -->
+    <div class="table-wrap">
+        <table>
+            
+            <!-- Table Headers -->
+            <thead>
+                <tr>
+                    <th>Ticket</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Assigned to</th>
+                    <th>Updated</th>
+                </tr>
+            </thead>
+
+            <!-- Table Body -->
+            <tbody>
+                <!-- Loop through each ticket passed from the backend -->
+                {% for t in tickets %}
+                <tr>
+                    <!-- Ticket ID and Title (Clickable link to detail view) -->
+                    <td>
+                        <a class="ticket-link" href="{{ url_for('ticket_detail', ticket_id=t.id) }}">
+                            <!-- Formats the ID with leading zeros (e.g., #0001) -->
+                            #{{ '%04d'|format(t.id) }} · {{ t.title }}
+                        </a>
+                        <small>{{ t.customer_name }}</small>
+                    </td>
+                    
+                    <!-- Category -->
+                    <td>{{ t.category }}</td>
+                    
+                    <!-- Priority Pill -->
+                    <!-- Note: The CSS class is dynamically generated based on priority (e.g., 'priority-high', 'priority-low') to change the pill colour -->
+                    <td>
+                        <span class="pill priority-{{ t.priority|lower }}">{{ t.priority }}</span>
+                    </td>
+                    
+                    <!-- Status Pill -->
+                    <td>
+                        <span class="pill">{{ t.status }}</span>
+                    </td>
+                    
+                    <!-- Assigned Agent (Falls back to 'Unassigned' if empty) -->
+                    <td>{{ t.assigned_name or 'Unassigned' }}</td>
+                    
+                    <!-- Last Updated Date (Truncates the timestamp to show only the first 10 characters, i.e., YYYY-MM-DD) -->
+                    <td>{{ t.updated_at[:10] }}</td>
+                </tr>
+                
+                <!-- Empty State: Displayed if the 'tickets' list is empty -->
+                {% else %}
+                <tr>
+                    <td colspan="6" class="empty">No tickets yet. Create your first request.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
+</section>
+
+{% endblock %}

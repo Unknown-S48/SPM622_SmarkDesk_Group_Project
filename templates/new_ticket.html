@@ -1,1 +1,68 @@
-{% extends 'base.html' %}{% block content %}<div class="heading"><div><div class="eyebrow">NEW REQUEST</div><h1>Create a support ticket</h1><p class="muted">Tell the team what you need help with.</p></div><a href="{{ url_for('dashboard') }}">← Dashboard</a></div><section class="panel form-panel"><form method="post"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><label>Subject<input name="title" maxlength="150" required placeholder="Brief summary of your issue"></label><label>Describe your issue<textarea name="description" maxlength="5000" rows="7" required placeholder="What happened? What have you tried?"></textarea></label><div class="two"><label>Category<select name="category">{% for c in categories %}<option>{{ c }}</option>{% endfor %}</select></label><label>Priority<select name="priority">{% for p in priorities %}<option {{ 'selected' if p=='Medium' else '' }}>{{ p }}</option>{% endfor %}</select></label></div><button class="btn">Submit ticket</button></form></section>{% endblock %}
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- =====================================================================
+     PAGE HEADER
+     Displays the title, subtitle, and a navigation link back to the dashboard.
+     ===================================================================== -->
+<div class="heading">
+    <div>
+        <div class="eyebrow">NEW REQUEST</div>
+        <h1>Create a support ticket</h1>
+        <p class="muted">Tell the team what you need help with.</p>
+    </div>
+    <a href="{{ url_for('dashboard') }}">← Dashboard</a>
+</div>
+
+<!-- =====================================================================
+     TICKET CREATION FORM
+     ===================================================================== -->
+<section class="panel form-panel">
+    <!-- The form submits data via POST to the current route (handled by Flask) -->
+    <form method="post">
+        
+        <!-- CSRF Security Token: Prevents Cross-Site Request Forgery attacks -->
+        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+
+        <!-- Subject Input Field: Required, limited to 150 characters -->
+        <label>Subject
+            <input name="title" maxlength="150" required placeholder="Brief summary of your issue">
+        </label>
+
+        <!-- Description Input Field: Required, limited to 5000 characters -->
+        <label>Describe your issue
+            <textarea name="description" maxlength="5000" rows="7" required placeholder="What happened? What have you tried?"></textarea>
+        </label>
+
+        <!-- Two-column layout for Category and Priority -->
+        <div class="two">
+            
+            <!-- Category Dropdown: Options are dynamically populated from the backend -->
+            <label>Category
+                <select name="category">
+                    {% for c in categories %}
+                    <option>{{ c }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+
+            <!-- Priority Dropdown: Options populated dynamically -->
+            <label>Priority
+                <select name="priority">
+                    {% for p in priorities %}
+                    <!-- Logic: Automatically pre-select 'Medium' as the default option -->
+                    <option {{ 'selected' if p == 'Medium' else '' }}>{{ p }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            
+        </div>
+
+        <!-- Submit Button -->
+        <button class="btn">Submit ticket</button>
+        
+    </form>
+</section>
+
+{% endblock %}

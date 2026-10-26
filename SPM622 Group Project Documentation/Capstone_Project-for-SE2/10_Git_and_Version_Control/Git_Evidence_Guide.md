@@ -1,39 +1,26 @@
 Project: SmartDesk: A Customer Support Ticketing System for Small IT Support Teams
 Group: Freek Schaefer-Gerber, Wian Sandenbergh
-1. Repository URL
 
-Link: [Insert your GitHub Repository URL here, e.g., https://github.com/YourUsername/SmartDesk]
-2. README
+# 1. Repository URL
+**Link:** https://github.com/Unknown-S48/SPM622_SmarkDesk_Group_Project
 
-A complete README.md is included in the root directory of the repository. It details the project description, technology stack (Python/Flask/SQLite), setup instructions, and the demonstration login credentials.
-3. Meaningful Commit History
+# 2. README
+A complete `README.md` is included in the root directory of the repository. It details the project description, technology stack (Python/Flask/SQLite), setup instructions, and the demonstration login credentials.
 
-We maintained a consistent commit history across the development lifecycle. Commit messages describe the specific changes made (e.g., "Add CSRF token validation to ticket creation" or "Fix cross-customer access in get_ticket route").
+# 3. Repository Overview & Commit History
+The project's source code, database scripts, templates, and complete documentation have been uploaded to the GitHub repository. The repository structure includes directories for documentation, SQL schemas, static files, templates, and automated tests.
 
-[Insert Screenshot 1 here: A screenshot of your GitHub "Commits" page showing at least 10-15 commits from both Freek and Wian]
-4. Branches Used
+**Commit History:**
+The repository shows the upload of the final project files and documentation.
 
-We used feature branches to isolate work before merging into the main branch.
+![Figure 1: Screenshot of the SmartDesk GitHub repository, showing the project directory structure and commit history.](image.png)
 
-    main - Production-ready code
+# 4. Project Structure & Collaboration
+The repository contains the following key components:
+* `SPM622 Group Project Documentation` (All chapters and final dissertation files)
+* `sql` (Database schema)
+* `static` & `templates` (Frontend UI)
+* `tests` (Automated pytest suites)
+* `app.py` (Main Flask application)
 
-    feature-auth - Login, registration, and session management
-
-    feature-tickets - Ticket creation, assignment, and comment logic
-
-    bugfix-isolation - Fix for the critical cross-customer access defect (D-01)
-
-[Insert Screenshot 2 here: A screenshot of your GitHub "Branches" page or a Git graph showing the branches and merges]
-5. Pull/Merge Evidence
-
-Work was merged into main after local testing.
-
-[Insert Screenshot 3 here: A screenshot of a Pull Request or Merge commit in GitHub showing the merge from a feature branch into main]
-6. Tagged/Released Final Version
-
-We tagged the final submission version of the code as v1.0-submission.
-
-[Insert Screenshot 4 here: A screenshot of your GitHub "Releases" or "Tags" section showing v1.0]
-7. Screenshots of Evidence
-
-(See embedded screenshots above. If repository access is restricted, these screenshots serve as the primary evidence of version control activity.)
+*(Note: The repository indicates contributions from the team member account `Unknown-S48` / Wian Sandenbergh).*
